@@ -4,8 +4,16 @@
 \alias{AggregateFlowFrames}
 \title{Aggregate multiple fcs files together}
 \usage{
-AggregateFlowFrames(fileNames, cTotal, writeOutput = FALSE,
-  outputFile = "aggregate.fcs", writeMeta = FALSE, keepOrder = FALSE)
+AggregateFlowFrames(
+  fileNames,
+  cTotal,
+  channels = NULL,
+  writeOutput = FALSE,
+  outputFile = "aggregate.fcs",
+  keepOrder = FALSE,
+  silent = FALSE,
+  ...
+)
 }
 \arguments{
 \item{fileNames}{Character vector containing full paths to the fcs files
@@ -13,16 +21,22 @@ to aggregate}
 
 \item{cTotal}{Total number of cells to write to the output file}
 
-\item{writeOutput}{Whether to write the resulting flowframe to a file}
+\item{channels}{Channels to keep in the aggregate. Default NULL takes all
+channels of the first file.}
 
-\item{outputFile}{Full path to output file}
+\item{writeOutput}{Whether to write the resulting flowframe to a file. 
+Default FALSE}
 
-\item{writeMeta}{If TRUE, files with the indices of the selected cells are
-generated}
+\item{outputFile}{Full path to output file. Default "aggregate.fcs"}
 
 \item{keepOrder}{If TRUE, the random subsample will be ordered in the same
 way as they were originally ordered in the file. Default =
 FALSE.}
+
+\item{silent}{If FALSE, prints an update every time it starts processing a
+new file. Default = FALSE.}
+
+\item{...}{Additional arguments to pass to read.FCS}
 }
 \value{
 This function does not return anything, but will write a file with
@@ -38,9 +52,9 @@ value between 0 and 0.1).
 }
 \examples{
 # Define filename
-fileName <- system.file("extdata","lymphocytes.fcs",package="FlowSOM")
+fileName <- system.file("extdata", "68983.fcs", package = "FlowSOM")
 # This example will sample 2 times 500 cells.
-ff_new <- AggregateFlowFrames(c(fileName,fileName),1000)
+ff_new <- AggregateFlowFrames(c(fileName, fileName), 1000)
 
 }
 \seealso{
